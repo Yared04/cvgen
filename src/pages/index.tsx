@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { UserCard } from "@/components/UserCard";
+import SkillsModal from "@/components/SkillsModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,6 +9,7 @@ export default function Home() {
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
       The winnning Project
+      <SkillsModal />
     </main>
   );
 }
