@@ -12,13 +12,13 @@ export const UserCard = ({ name, email, phone, address, photo }: UserProps) => {
   return (
     <div className="border-2 p-8 rounded-md">
       <h1 className="font-bold text-xl align-start">Basic Information</h1>
-      <div className="flex gap-2 my-4">
+      <div className="flex gap-2 my-4 items-center ">
         <img
-          className="rounded-full w-16 h-16"
+          className="rounded-full object-cover w-16 h-16"
           src={photo}
           alt="profile picture"
         />
-        <h2 className="m-auto font-semibold">{name}</h2>
+        <h2 className=" font-semibold">{name}</h2>
       </div>
       <span className="flex gap-2">
         <img src="./address.svg" alt="address" />
