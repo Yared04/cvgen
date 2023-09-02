@@ -11,7 +11,7 @@ interface UserProps {
   }
 const profilebuild = () => {
   return (
-    <div className='px-6'>
+    <div className='px-6 min-h-[100vh]'>
         <p className='w-fit m-auto text-3xl font-bold p-5 '>Build Your Profile</p>
     <div className='flex w-full gap-12 '>
         <div className='w-[25%]'>
