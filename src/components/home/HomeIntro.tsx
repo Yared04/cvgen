@@ -22,14 +22,14 @@ const HomeIntro: React.FC = () => {
         <div className="p-16 relative">
           <div className="absolute bottom-[3%] right-[20%] z-10">
             <Image
-              className="object-contain w-48 h-48 "
+              className="object-contain w-32 h-32 "
               width={10}
               height={10}
               src={"/images/home/dots.svg"}
               alt=""
             />
           </div>
-          <div className="relative w-full h-full z-20">
+          <div className="relative w-full h-full z-20 p-8">
             <Image
               className="object-contain w-full h-full "
               width={10}
