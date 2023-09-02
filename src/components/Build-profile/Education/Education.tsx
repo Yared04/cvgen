@@ -2,15 +2,28 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import EducationCard from "./EducationCard";
 import EducationModal from "@/components/Modals/EducationModal";
+import supabase from "@/utils/supaBaseClient";
 
 const Education = () => {
   const [display, setDisplay] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [education, setEducation] = useState([]);
 
   const trigger = useRef(null);
   const modal = useRef(null);
 
-  // close on click outside
+  useEffect(() => {
+    const fetchEducation = async () => {
+      const { data, error } = await supabase
+        .from("education")
+        .select("*")
+        .eq("user_id", (await supabase.auth.getUser()).data.user.id);
+      if (error) return console.log(error);
+      setEducation(data);
+    };
+    fetchEducation();
+  }, []);
+
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!modal.current) return;
@@ -49,8 +62,9 @@ const Education = () => {
       </div>
       {display && (
         <div className="mt-12">
-          <EducationCard />
-          <EducationCard />
+          {education.map((edu) => (
+            <EducationCard key={edu.id} edu={edu} />
+          ))}
         </div>
       )}
       {showModal && (

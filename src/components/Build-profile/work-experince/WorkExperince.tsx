@@ -1,14 +1,27 @@
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import WorkCard from "./WorkCard";
 import WorkExpModal from "@/components/Modals/WorkExpModal";
+import supabase from "@/utils/supaBaseClient";
 
 const WorkExperince = () => {
   const [display, setDisplay] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [workExperince, setWorkExperince] = useState([]);
 
   const trigger = useRef(null);
   const modal = useRef(null);
+
+  useEffect(() => {
+    const fetchWorkExperince = async () => {
+      const { data, error } = await supabase
+        .from("work_experience")
+        .select("*");
+      if (error) return console.log(error);
+      setWorkExperince(data);
+    };
+    fetchWorkExperince();
+  }, []);
 
   // close on click outside
   useEffect(() => {
@@ -50,9 +63,9 @@ const WorkExperince = () => {
 
       {display && (
         <div className="mt-12">
-          <WorkCard />
-          <WorkCard />
-          <WorkCard />
+          {workExperince.map((work) => (
+            <WorkCard key={work.id} work={work} />
+          ))}
         </div>
       )}
       {showModal && (
