@@ -3,6 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { AppContext } from "./_app";
+import { supabase } from "@/utils/supaBaseClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -62,15 +63,12 @@ const Login = () => {
 
     if (email && password) {
       try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/login`,
-          {
-            email,
-            password,
-          }
-        );
+        const { user, error } = await supabase.auth.signInWithIdToken({
+          email,
+          password,
+        });
+        if (error) throw error;
         // Handle successful login response
-        window.localStorage.setItem("token", response.data);
         setCurUser();
         router.push("/");
       } catch (error) {
