@@ -1,38 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ResumAI - Cover Letter and CV Generator
 
-## Getting Started
+![ResumAI Logo](public/images/home/logo.svg)
 
-First, run the development server:
+The ResumAI Cover Letter Generator is a powerful platform that utilizes generative AI APIs to automate the creation of personalized CVs and cover letters for specific companies. Say goodbye to repetitive customization and manual adjustments - with our platform, you can generate unlimited high-quality cover letters tailored to your target companies effortlessly.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Streamlined Process: Users provide their personal information, including experiences, projects, and other relevant details, only once. They also answer questions about the job, job position, and job description. Our system intelligently combines this information to generate tailored CVs and cover letters.
+- Data Analysis and Scraping: Our platform further analyzes the job description and scrapes important details from the company's website, such as its culture and values. This ensures that the generated CVs and cover letters align with the specific company's requirements and culture.
+- Tailored Content: By combining the user's input and the scraped information, we generate CVs and cover letters that showcase their skills and experiences effectively. Each application material is personalized, giving users a competitive edge and ensuring their application stands out.
+- Efficiency and Time Savings: The automated process eliminates repetitive customization and manual adjustments for each application. Users can generate an unlimited number of high-quality cover letters with minimal effort, saving significant time.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Tech Stack
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Back-end: Flask, PostgreSQL, Supabase, Python, Langchain
+- Front-end: Next.js, TypeScript
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Future Enhancements
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+We have exciting plans to further improve the resumAI Cover Letter Generator:
 
-## Learn More
+- Integration with additional AI APIs to enhance the quality and creativity of the generated cover letters.
+- Advanced user profiles and preferences to store and manage multiple versions of CVs and cover letters.
+- Integration with popular job search platforms and HR systems for seamless application submission.
+- Enhanced user interface and customization options to provide a more interactive and intuitive user experience.
 
-To learn more about Next.js, take a look at the following resources:
+## Contributions and Feedback
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions, feedback, and feature requests are welcome! Feel free to open issues and submit pull requests in this repository.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
+This project is licensed under the [MIT License](LICENSE).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Let your CV and cover letters shine with personalized content that aligns with each company's unique requirements. The resumAI Cover Letter Generator empowers you to save time, increase efficiency, and maximize your chances of success in the job market. Get started today and land your dream job with ease!
