@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
-const WorkExpModal = () => {
-  const [company, setCompany] = useState("");
-  const [title, setTitle] = useState("");
-  const [experience, setExperience] = useState("");
-  const [description, setDescription] = useState("");
-  const [country, setCountry] = useState("");
-  const [region, setRegion] = useState("");
+const EducationModal = () => {
+  const [school, setSchool] = useState("");
+  const [major, setMajor] = useState("");
+  const [degree, setDegree] = useState("");
   const [startMonth, setStartMonth] = useState("");
   const [startYear, setStartYear] = useState("");
   const [endMonth, setEndMonth] = useState("");
   const [endYear, setEndYear] = useState("");
-  const [currentlyWorking, setCurrentlyWorking] = useState(false);
 
   const months = [
     { id: 1, name: "January" },
@@ -33,92 +28,84 @@ const WorkExpModal = () => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 20 }, (_, i) => currentYear - i);
 
-  const handleCurrentlyWorkingChange = (e) => {
-    setCurrentlyWorking(e.target.checked);
-    if (e.target.checked) {
-      setEndMonth("");
-      setEndYear("");
-    }
-  };
-
   return (
-    <div className="text-text-secondary border-2 p-6">
+    <div className="text-text-secondary border-2 p-6 w-10/12">
       <span className="flex gap-2 mb-4">
-        <Image src="/workExp.png" alt="add" width={40} height={40} />
-        <h1 className="my-auto text-black font-bold text-xl">
-          Add Work Experience
-        </h1>
+        <Image src="/education.svg" alt="add" width={40} height={40} />
+        <h1 className="my-auto text-black font-bold text-xl">Add Education</h1>
       </span>
       <form action="">
-        <div className="grid grid-cols-2 gap-5">
-          <div className="">
-            <label className="font-semibold pl-2" htmlFor="company">
-              Company
+        <div className="">
+          <label className="font-semibold pl-2" htmlFor="school">
+            School Name
+          </label>
+          <input
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}
+            className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            id="school"
+            name="school"
+            type="text"
+            placeholder="School"
+            required
+          />
+        </div>
+        <div className="grid grid-cols-6 gap-5">
+          <div className="col-span-3">
+            <label className="font-semibold pl-2" htmlFor="Major">
+              Major
             </label>
             <input
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
+              value={major}
+              onChange={(e) => setMajor(e.target.value)}
               className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              id="company"
-              name="company"
+              id="Major"
+              name="Major"
               type="text"
-              placeholder="Company"
+              placeholder="Major"
+              required
             />
           </div>
-          <div>
-            <label className="font-semibold block pl-2" htmlFor="location">
-              Location
-            </label>
-            <CountryDropdown
-              classes="border-2 rounded-md p-2 w-2/5 h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              value={country}
-              onChange={(val) => setCountry(val)}
-              id="location"
-            />
-            <RegionDropdown
-              classes="border-2 rounded-md p-2 w-2/5 h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              country={country}
-              value={region}
-              onChange={(val) => setRegion(val)}
-              id="location"
-            />
-          </div>
-          <div className="">
-            <label className="font-semibold pl-2" htmlFor="title">
-              Position Title
-            </label>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              id="title"
-              name="title"
-              type="text"
-              placeholder="Title"
-            />
-          </div>
-          <div>
-            <label className="font-semibold pl-2" htmlFor="experience">
-              Experience Type
+          <div className="col-span-2">
+            <label className="font-semibold pl-2" htmlFor="degree">
+              Degree Type
             </label>
             <select
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
+              value={degree}
+              onChange={(e) => setDegree(e.target.value)}
               className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              id="experience"
-              name="experience"
-              placeholder="Experience Type"
+              id="degree"
+              name="degree"
+              placeholder="Degree Type"
+              required
             >
               <option className="" value="1">
-                Internship
+                Bachelor's
               </option>
               <option className="" value="2">
-                Full Time
+                Master's
               </option>
               <option className="" value="3">
-                Part Time
+                MBA
               </option>
+              <option className="" value="4">
+                PhD
+              </option>
+              <option value="5">PharMD</option>
+              <option value="6">Associate's</option>
             </select>
+          </div>
+          <div className="col-span-1">
+            <label className="font-semibold pl-2" htmlFor="gpa">
+              GPA
+            </label>
+            <input
+              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              id="gpa"
+              name="gpa"
+              type="number"
+              placeholder="GPA"
+            />
           </div>
         </div>
         <div className="grid grid-cols-4 gap-5 mt-4">
@@ -129,6 +116,7 @@ const WorkExpModal = () => {
             <select
               id="startMonth"
               value={startMonth}
+              required
               onChange={(e) => setStartMonth(e.target.value)}
               className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -151,6 +139,7 @@ const WorkExpModal = () => {
             <select
               id="startYear"
               value={startYear}
+              required
               onChange={(e) => setStartYear(e.target.value)}
               className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -172,7 +161,7 @@ const WorkExpModal = () => {
             <select
               id="endMonth"
               value={endMonth}
-              disabled={currentlyWorking} // Disable the field when currentlyWorking is true
+              required
               onChange={(e) => setEndMonth(e.target.value)}
               className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -193,7 +182,7 @@ const WorkExpModal = () => {
             <select
               id="endYear"
               value={endYear}
-              disabled={currentlyWorking} // Disable the field when currentlyWorking is true
+              required
               onChange={(e) => setEndYear(e.target.value)}
               className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -208,29 +197,6 @@ const WorkExpModal = () => {
             </select>
           </span>
         </div>
-        <div className="flex items-center gap-2 m-4 ml-2">
-          <input
-            type="checkbox"
-            id="currentlyWorking"
-            checked={currentlyWorking}
-            onChange={handleCurrentlyWorkingChange}
-          />
-          <label className="font-semibold " htmlFor="currentlyWorking">
-            I currently Work here
-          </label>
-        </div>
-        <label htmlFor="description">
-          <h1 className="font-semibold pl-2">Description</h1>
-        </label>
-
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="border-2 rounded-md p-2 w-full h-28 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          id="description"
-          name="description"
-          placeholder="Description"
-        />
         <div className="flex justify-between">
           <button className="hover:bg-gray-700 border-2 text-black w-full font-bold py-2 px-4 m-2 rounded">
             Cancel
@@ -244,4 +210,4 @@ const WorkExpModal = () => {
   );
 };
 
-export default WorkExpModal;
+export default EducationModal;
