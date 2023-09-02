@@ -8,22 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#090E34',
-        'primary-bg': '#FFFFFF',
-        'primary-light': '#3C4ABA',
-        'primary-extra-light': '#F4F7FF',
-        'light-text': '#637381'
-
+        primary: "#090E34",
+        "primary-bg": "#FFFFFF",
+        "primary-light": "#3C4ABA",
+        "primary-extra-light": "#F4F7FF",
+        "light-text": "#637381",
+        "text-secondary": "#6B7280",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-      colors: {
-        primary: "#090E34",
-        "primary-light": "#3C4ABA",
-        "text-secondary": "#6B7280",
       },
     },
   },
