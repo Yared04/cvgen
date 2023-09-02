@@ -3,7 +3,7 @@ import Image from "next/image";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import Select from "react-select";
 
-const WorkExpModal = () => {
+const WorkExpModal = ({ close, modal }) => {
   const [company, setCompany] = useState("");
   const [title, setTitle] = useState("");
   const [experience, setExperience] = useState<{
@@ -81,7 +81,7 @@ const WorkExpModal = () => {
   ];
 
   return (
-    <div className="text-text-secondary border p-6">
+    <div className="text-text-secondary border p-6 bg-white" ref={modal}>
       <span className="flex gap-2 mb-4">
         <Image src="/workExp.png" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">
@@ -239,7 +239,10 @@ const WorkExpModal = () => {
           placeholder="Description"
         />
         <div className="flex justify-between">
-          <button className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded">
+          <button
+            onClick={() => close(false)}
+            className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded"
+          >
             Cancel
           </button>
           <button className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">

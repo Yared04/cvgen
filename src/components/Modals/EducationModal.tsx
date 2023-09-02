@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
 
-const EducationModal = () => {
+const EducationModal = ({ close, modal }) => {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [degree, setDegree] = useState<{ value: string; label: string } | null>(
@@ -74,7 +74,7 @@ const EducationModal = () => {
   }));
 
   return (
-    <div className="text-text-secondary border p-6 w-10/12">
+    <div className="text-text-secondary border p-6 bg-white w-7/12" ref={modal}>
       <span className="flex gap-2 mb-4">
         <Image src="/education.svg" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">Add Education</h1>
@@ -198,7 +198,10 @@ const EducationModal = () => {
           </span>
         </div>
         <div className="flex justify-between mt-4">
-          <button className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded">
+          <button
+            onClick={() => close(false)}
+            className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded"
+          >
             Cancel
           </button>
           <button className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">

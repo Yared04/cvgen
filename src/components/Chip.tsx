@@ -6,7 +6,7 @@ const Chip = ({ Options }) => {
       {Options.map((option) => (
         <div
           key={option.value}
-          className="bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold m-1"
+          className="bg-gradient-to-b from-primary to-primary-light text-white capitalize rounded-full px-3 py-1 text-sm font-semibold m-1"
         >
           {option.label}
         </div>

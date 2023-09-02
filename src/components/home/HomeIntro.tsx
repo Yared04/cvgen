@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const HomeIntro: React.FC = () => {
@@ -14,9 +15,11 @@ const HomeIntro: React.FC = () => {
             your chances of success
           </p>
           <div>
-            <button className="bg-white rounded-md text-center text-primary py-4 px-6 text-md font-semibold">
-              Get Started Now
-            </button>
+            <Link href={"/profilebuild"}>
+              <button className="bg-white rounded-md text-center text-primary py-4 px-6 text-md font-semibold">
+                Get Started Now
+              </button>
+            </Link>
           </div>
         </div>
         <div className="p-16 relative">

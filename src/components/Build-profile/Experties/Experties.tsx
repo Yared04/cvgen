@@ -1,36 +1,76 @@
-import React,{useState} from 'react'
-import Image from 'next/image'
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import SkillsModal from "@/components/Modals/SkillsModal";
 
 const Experties = () => {
-    const [display,setDisplay] = useState(false)
+  const [display, setDisplay] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const trigger = useRef(null);
+  const modal = useRef(null);
+
+  // close on click outside
+  useEffect(() => {
+    const clickHandler = ({ target }) => {
+      if (!modal.current) return;
+      if (
+        !showModal ||
+        modal.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
+      setShowModal(false);
+    };
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
+  });
   return (
-        <div className='border-2 p-4 mt-2 mx-3 rounded-md' onClick={() => setDisplay(prev => !prev)}>
-        <div className='flex  justify-between items-center'>
-
+    <div
+      className="border-2 p-4 mt-2 mx-3 rounded-md"
+      onClick={() => setDisplay((prev) => !prev)}
+    >
+      <div className="flex  justify-between items-center">
         <div>
-            <p className='font-bold text-2xl capitalize'>skills</p>
-            {/* <p className='text-text-secondary capitalize mt-4 font-semibold'>no Experince Added</p> */}
-            
+          <p className="font-bold text-2xl capitalize">skills</p>
+          {/* <p className='text-text-secondary capitalize mt-4 font-semibold'>no Experince Added</p> */}
         </div>
-        <div className='bg-[#E9F9FF] shadow-sm p-2 rounded-md'>
-        <div className='relative w-[1.2rem] h-[1.2rem]'>
-            <Image alt = " plus icon" src="/plus.svg" fill/>
+        <div className="bg-[#E9F9FF] shadow-sm p-2 rounded-md">
+          <div
+            onClick={() => {
+              setShowModal(!showModal);
+            }}
+            className="relative w-[1.2rem] h-[1.2rem] cursor-pointer"
+            ref={trigger}
+          >
+            <Image alt=" plus icon" src="/plus.svg" fill />
+          </div>
         </div>
+      </div>
+      {display && (
+        <div className="mt-4 flex flex-wrap gap-4">
+          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
+            Node.js
+          </p>
+          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
+            Node.js
+          </p>
+          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
+            Node.js
+          </p>
+          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
+            Node.js
+          </p>
         </div>
+      )}
+      {showModal && (
+        <div
+          className={`fixed top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-70 px-4 py-5 z-50`}
+        >
+          <SkillsModal close={setShowModal} modal={modal} />
         </div>
-        {
-                display &&
-            <div className='mt-4 flex flex-wrap gap-4'>
-                <p className=' bg-primary px-4 py-2 rounded-[4rem] text-white'>Node.js</p>
-                <p className=' bg-primary px-4 py-2 rounded-[4rem] text-white'>Node.js</p>
-                <p className=' bg-primary px-4 py-2 rounded-[4rem] text-white'>Node.js</p>
-                <p className=' bg-primary px-4 py-2 rounded-[4rem] text-white'>Node.js</p>
-            </div>
-            }
-        
-
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Experties
+export default Experties;

@@ -3,7 +3,7 @@ import Select from "react-select";
 import axios from "axios";
 import Image from "next/image";
 
-export function ResumeSkillsSelect() {
+export function ResumeSkillsSelect({ close, modal }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
   //   const [skillsOptions, setSkillsOptions] = useState([]);
 
@@ -48,7 +48,10 @@ export function ResumeSkillsSelect() {
   };
 
   return (
-    <div className="text-text-secondary border p-6 w-10/12">
+    <div
+      className="text-text-secondary border p-6 w-10/12 bg-white"
+      ref={modal}
+    >
       <span className="flex gap-2 mb-4">
         <Image src="/education.svg" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">Edit Skills</h1>
@@ -64,7 +67,10 @@ export function ResumeSkillsSelect() {
         className="pl-2"
       />
       <div className="flex justify-between">
-        <button className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded">
+        <button
+          onClick={() => close(false)}
+          className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded"
+        >
           Cancel
         </button>
         <button
