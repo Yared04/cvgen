@@ -1,11 +1,11 @@
 import { ChooseSection } from '@/components/ChooseSection'
-import ResumeOutline from '@/components/resume/ResumeOutline'
+import ResumeAndChat from '@/components/resume/ResumeAndChat'
 import React from 'react'
 
 const resume = () => {
   return (
     <div>
-        <ChooseSection/>
+        <ResumeAndChat/>
     </div>
   )
 }

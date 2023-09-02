@@ -1,13 +1,15 @@
 import Image from 'next/image'
-import React from 'react'
+import React,{useContext} from 'react'
+import { AppContext } from '@/pages/_app'
 
 const ResumeOutline = () => {
+    const {state, setState} = useContext(AppContext)
   return (
-        <div className='flex h-full w-full rounded-xl'>      
-        <div className='bg-[#E6E6E4] w-[30%] flex flex-col gap-3 justify-center items-center '>
-            <p className='font-bold text-[3rem]'>Natenaiel Tadele</p>
-            <p className='font-semibold text-2xl'>software engineering</p>
-            <div className='relative w-[9rem] h-[9rem]'>
+        <div className='flex h-[80vh] w-full rounded-xl border-2'>      
+        <div className='bg-[#E6E6E4] w-[50%] flex flex-col gap-3  items-center '>
+            <p className='font-bold text-2xl'>Natenaiel Tadele</p>
+            <p className='font-semibold text-md'>software engineering</p>
+            <div className='relative w-[5rem] h-[5rem]'>
                 <Image alt='profile image' className=' rounded-full object-cover  w-[9rem] h-[9rem]' fill src='/images/home/team/naty.svg'/>
             </div>
             <div>
@@ -31,10 +33,12 @@ const ResumeOutline = () => {
             </div>
 
         </div>
-        <div className='pl-12'>
-            <p>Dear,</p>
-            <p>sincerly</p>
-
+        <div className='pl-12 w-full overflow-scroll overflow-x-hidden'>
+            <p>
+            {
+                state.coverLetter
+            }
+            </p>
         </div>
         </div>
   )

@@ -8,7 +8,7 @@ export const AppContext = createContext({
   state: {
     curUser: { id: "", username: "" },
     chat:[],
-    coverLetter:{message:""}
+    coverLetter:""
   },
   setState: (state) => {},
 });
@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [state, setState] = useState({
     curUser: { id: "", username: "" },
     chat:[],
-    coverLetter:{message:""}
+    coverLetter:""
   });
 
   return (

@@ -1,13 +1,43 @@
-
+import React, { useContext, useState } from "react";
+import axios from 'axios';
+import { AppContext } from "@/pages/_app";
+import { useRouter } from 'next/router';
+import Loading from "./Common/Loading";
 export const CompanyDetails = ({ }) => {
+    const [companyName, setCompanyName] = useState('')
+  const [position, setPosition] = useState('')
+  const [description, setDescription] = useState('')
+  const [loading, setLoading] = useState(false)
+  const {state,setState} = useContext(AppContext)
+  const router = useRouter();
+  const submitHandler = async (event) => {
+    event.preventDefault()
+    try {
+      const postData = {
+        user_id: 'c202d7f6-9406-44ba-b51b-ebfdb8dc93d7',
+        position: position,
+        description: description,
+        message:'',
+        company_name:companyName
+      };
+      setLoading(true)
+      const response = await axios.post('https://resumeai-backend-1fe8.onrender.com/api/cover_letter', postData);
+      setState({...state,chat:[...state.chat, response.data.message],coverLetter:response.data.cover_letter })
+  
+      console.log('Post request successful:', response.data);
+      router.push('/resume')
+      setLoading(false)
+    } catch (error) {
+      console.error('Error making POST request:', error);
+    }
+  };
     return (
         <div className="text-text-secondary p-6 w-full">
-    <h1 className="my-auto text-black  text-xl">Company Details <span className="my-auto text-[#ff0000] text-xl">*</span></h1>
-    
-  
-  
+          <h1 className="my-auto text-black  text-xl">Company Details <span className="my-auto text-[#ff0000] text-xl">*</span></h1>
+          {
+            loading ? <Loading/> :
 
-  <form action="">
+  <form onSubmit={submitHandler} action="">
     <div className="mt-4">
       
       <input
@@ -17,6 +47,8 @@ export const CompanyDetails = ({ }) => {
         type="text"
         placeholder="Comapany Name"
         required
+        value={companyName} 
+        onChange={e => setCompanyName(e.target.value)}
       />
     </div>
     <div className="mt-4">
@@ -28,6 +60,8 @@ export const CompanyDetails = ({ }) => {
         type="text"
         placeholder="Job Position"
         required
+        value={position} 
+        onChange={e => setPosition(e.target.value)}
       />
     </div>
     <div className="mt-4">
@@ -38,15 +72,18 @@ export const CompanyDetails = ({ }) => {
         name="jobDescription"
         placeholder="Job Description"
         required
+        value={description} 
+        onChange={e => setDescription(e.target.value)}
       ></textarea>
     </div>
     <div className="flex justify-center mt-4">
       
-      <button className="bg-primary w-[60%] hover:shadow-xl text-white font-bold py-2 px-4 m-2 rounded ">
-        Generate
+      <button type="submit" className="bg-primary w-[60%] hover:shadow-xl text-white font-bold py-2 px-4 m-2 rounded ">
+         Generate
       </button>
     </div>
   </form>
+          }
 </div>
     );
 };
