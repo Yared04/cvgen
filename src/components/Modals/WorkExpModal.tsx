@@ -1,18 +1,35 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import Select from "react-select";
 
 const WorkExpModal = () => {
   const [company, setCompany] = useState("");
   const [title, setTitle] = useState("");
-  const [experience, setExperience] = useState("");
+  const [experience, setExperience] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
   const [description, setDescription] = useState("");
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
-  const [startMonth, setStartMonth] = useState("");
-  const [startYear, setStartYear] = useState("");
-  const [endMonth, setEndMonth] = useState("");
-  const [endYear, setEndYear] = useState("");
+  const [startMonth, setStartMonth] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
+  const [endMonth, setEndMonth] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
+  const [startYear, setStartYear] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
+  const [endYear, setEndYear] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
+
   const [currentlyWorking, setCurrentlyWorking] = useState(false);
 
   const months = [
@@ -29,20 +46,42 @@ const WorkExpModal = () => {
     { id: 11, name: "November" },
     { id: 12, name: "December" },
   ];
+  const monthOptions = [
+    ...months.map((month) => ({
+      value: month.id.toString(),
+      label: month.name,
+    })),
+  ];
+  const handleStartMonthChange = (selectedOption) => {
+    setStartMonth(selectedOption.name);
+  };
+  const handleEndMonthChange = (selectedOption) => {
+    setEndMonth(selectedOption.name);
+  };
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 20 }, (_, i) => currentYear - i);
+  const yearOptions = years.map((year) => ({
+    value: year.toString(),
+    label: year.toString(),
+  }));
 
   const handleCurrentlyWorkingChange = (e) => {
     setCurrentlyWorking(e.target.checked);
     if (e.target.checked) {
-      setEndMonth("");
-      setEndYear("");
+      setEndMonth(null);
+      setEndYear(null);
     }
   };
 
+  const experienceOptions = [
+    { value: "1", label: "Internship" },
+    { value: "2", label: "Full-time" },
+    { value: "3", label: "Part-time" },
+  ];
+
   return (
-    <div className="text-text-secondary border-2 p-6">
+    <div className="text-text-secondary border p-6">
       <span className="flex gap-2 mb-4">
         <Image src="/workExp.png" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">
@@ -58,7 +97,7 @@ const WorkExpModal = () => {
             <input
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="border rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               id="company"
               name="company"
               type="text"
@@ -70,13 +109,13 @@ const WorkExpModal = () => {
               Location
             </label>
             <CountryDropdown
-              classes="border-2 rounded-md p-2 w-2/5 h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              classes="border rounded-md p-2 w-2/5 h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               value={country}
               onChange={(val) => setCountry(val)}
               id="location"
             />
             <RegionDropdown
-              classes="border-2 rounded-md p-2 w-2/5 h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              classes="border rounded-md p-2 w-2/5 h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               country={country}
               value={region}
               onChange={(val) => setRegion(val)}
@@ -90,7 +129,7 @@ const WorkExpModal = () => {
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="border rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               id="title"
               name="title"
               type="text"
@@ -101,24 +140,17 @@ const WorkExpModal = () => {
             <label className="font-semibold pl-2" htmlFor="experience">
               Experience Type
             </label>
-            <select
+            <Select
               value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onChange={(
+                selectedOption: { value: string; label: string } | null
+              ) => setExperience(selectedOption)}
+              options={experienceOptions}
+              className="border-1 rounded-md p-2 w-full h-10  text-text-secondary"
               id="experience"
               name="experience"
               placeholder="Experience Type"
-            >
-              <option className="" value="1">
-                Internship
-              </option>
-              <option className="" value="2">
-                Full Time
-              </option>
-              <option className="" value="3">
-                Part Time
-              </option>
-            </select>
+            />
           </div>
         </div>
         <div className="grid grid-cols-4 gap-5 mt-4">
@@ -126,86 +158,61 @@ const WorkExpModal = () => {
             <label className="font-semibold pl-2" htmlFor="startMonth">
               Start Month
             </label>
-            <select
+            <Select
               id="startMonth"
               value={startMonth}
-              onChange={(e) => setStartMonth(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option className="font-bold" value="">
-                Month
-              </option>
-              {months.map((month) => (
-                <option key={month.id} value={month.id}>
-                  {month.name}
-                </option>
-              ))}
-            </select>
+              required
+              onChange={handleStartMonthChange}
+              options={monthOptions}
+              className="border-1 rounded-md p-2 w-full h-10  text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </span>
-
           <span>
             <label className="font-semibold pl-2" htmlFor="startYear">
               Start Year
             </label>
 
-            <select
+            <Select
               id="startYear"
               value={startYear}
-              onChange={(e) => setStartYear(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option className="font-bold" value="">
-                Year
-              </option>
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
+              required
+              onChange={(
+                selectedOption: { value: string; label: string } | null
+              ) => setStartYear(selectedOption)}
+              options={yearOptions}
+              className="border-1 rounded-md p-2 w-full h-10 text-text-secondary"
+              placeholder="Year"
+            />
           </span>
-
           <span>
             <label className="font-semibold pl-2" htmlFor="endMonth">
               End Month
             </label>
-            <select
+            <Select
               id="endMonth"
               value={endMonth}
-              disabled={currentlyWorking} // Disable the field when currentlyWorking is true
-              onChange={(e) => setEndMonth(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option className="font-bold" value="">
-                Month
-              </option>
-              {months.map((month) => (
-                <option key={month.id} value={month.id}>
-                  {month.name}
-                </option>
-              ))}
-            </select>
+              required
+              onChange={handleEndMonthChange}
+              options={monthOptions}
+              className="border-1 rounded-md p-2 w-full h-10  text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </span>
           <span>
             <label className="font-semibold pl-2" htmlFor="endYear">
               End Year
             </label>
-            <select
+
+            <Select
               id="endYear"
               value={endYear}
-              disabled={currentlyWorking} // Disable the field when currentlyWorking is true
-              onChange={(e) => setEndYear(e.target.value)}
-              className="border-2 rounded-md p-2 w-full h-10 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option className="font-bold" value="">
-                Year
-              </option>
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
+              required
+              onChange={(
+                selectedOption: { value: string; label: string } | null
+              ) => setEndYear(selectedOption)}
+              options={yearOptions}
+              className="border-1 rounded-md p-2 w-full h-10 text-text-secondary"
+              placeholder="Year"
+            />
           </span>
         </div>
         <div className="flex items-center gap-2 m-4 ml-2">
@@ -226,13 +233,13 @@ const WorkExpModal = () => {
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="border-2 rounded-md p-2 w-full h-28 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="border rounded-md p-2 w-full h-28 m-2 text-text-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           id="description"
           name="description"
           placeholder="Description"
         />
         <div className="flex justify-between">
-          <button className="hover:bg-gray-700 border-2 text-black w-full font-bold py-2 px-4 m-2 rounded">
+          <button className="hover:bg-gray-700 border text-black w-full font-bold py-2 px-4 m-2 rounded">
             Cancel
           </button>
           <button className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">

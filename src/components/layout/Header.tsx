@@ -17,7 +17,7 @@ const Header: React.FC = () => {
       </div>
       <div className="flex items-center space-x-6 text-sm font-small">
         <Link href={"/"}>Home</Link>
-        <Link href={"/"}>Features</Link>
+        <Link href={"/features"}>Features</Link>
         <Link href={"/"}>Team</Link>
         <Link href={"/"}>Contact</Link>
       </div>
