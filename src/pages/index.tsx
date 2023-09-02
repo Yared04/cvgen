@@ -1,14 +1,24 @@
 import { Inter } from "next/font/google";
-import { UserCard } from "@/components/UserCard";
-
+import HomeIntro from "@/components/home/HomeIntro";
+import Services from "@/components/home/Services";
+import OurTeam from "@/components/home/OurTeam";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      The winnning Project
+    <main className={`w-full ${inter.className}`}>
+      <HomeIntro />
+      <Services />
+      <OurTeam />
+      <div className="w-full flex items-center py-8 bg-primary-extra-light">
+        <Image
+          className="w-full h-8"
+          width={20}
+          height={20}
+          src={"/images/home/a2sv.svg"}
+          alt=""
+        />
+      </div>
     </main>
   );
 }
