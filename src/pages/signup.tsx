@@ -3,9 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/router";
+import supabase from "@/utils/supabaseClient";
 
 const Signup = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,13 +16,7 @@ const Signup = () => {
   const [signupError, setSignupError] = useState("");
   const router = useRouter();
 
-  const validateUsername = () => {
-    if (!username) {
-      setUsernameError("Username is required");
-    } else {
-      setUsernameError("");
-    }
-  };
+
 
   const validateEmail = () => {
     if (!email) {
@@ -55,34 +49,32 @@ const Signup = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    validateUsername();
     validateEmail();
     validatePassword();
     validateConfirmPassword();
 
     if (
-      username &&
       email &&
       password &&
       confirmPassword &&
       password === confirmPassword
     ) {
       try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/register`,
-          {
-            username,
-            email,
-            password,
-          }
-        );
+        try {
+      const response = await supabase.auth.signUp({ email, password });
+
+      console.log(response);
 
         router.push("/login");
       } catch (error) {
         setSignupError("Error signing up");
       }
     }
+    catch (error) {
+      console.log(error);
+    }
   };
+}
 
   return (
     <div className="bg-slate-50 h-screen flex justify-center">
@@ -91,19 +83,7 @@ const Signup = () => {
           Sign Up
         </p>
         <div className="flex flex-col gap-4 place-items-center">
-          <input
-            className="bg-gray-100 h-12 rounded-md pl-3 w-full focus:bg-white focus:outline-gray-200"
-            placeholder="Username"
-            type="text"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setUsernameError("");
-              setSignupError("");
-            }}
-            onBlur={validateUsername}
-          />
-          {usernameError && <p className="text-red-500">{usernameError}</p>}
+          
 
           <input
             className="bg-gray-100 h-12 rounded-md pl-3 focus:bg-white focus:outline-gray-200"
@@ -176,4 +156,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signup

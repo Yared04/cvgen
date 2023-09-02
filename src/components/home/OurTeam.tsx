@@ -30,7 +30,7 @@ const OurTeam: React.FC = () => {
     },
   ];
   return (
-    <div className="w-full flex flex-col p-16 items-center text-center space-y-8">
+    <div className="w-full flex flex-col p-16 items-center text-center space-y-8" id="team">
       <div className="flex flex-col items-center space-y-4 max-w-2xl">
         <p className="font-bold text-3xl">Meet Our Team</p>
         <p>

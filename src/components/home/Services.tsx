@@ -20,7 +20,7 @@ const Services: React.FC = () => {
     },
   ];
   return (
-    <div className="relative flex p-16 md:p-32 bg-primary-extra-light w-full">
+    <div className="relative flex p-16 md:p-32 bg-primary-extra-light w-full" id="services">
       <div className="absolute top-[10%] right-[5%] z-10">
         <Image
           className="object-contain w-32 h-32 text-primary"
