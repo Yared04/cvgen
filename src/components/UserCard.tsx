@@ -10,7 +10,7 @@ interface UserProps {
 
 export const UserCard = ({ name, email, phone, address, photo }: UserProps) => {
   return (
-    <div className="border-2 p-8 rounded-md">
+    <div className="border p-8 rounded-md">
       <h1 className="font-bold text-xl align-start">Basic Information</h1>
       <div className="flex gap-2 my-4 items-center ">
         <img
