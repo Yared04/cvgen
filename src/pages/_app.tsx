@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import { AppProps } from "next/app";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const AppContext = createContext({
   state: {
@@ -13,6 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [state, setState] = useState({
     curUser: { id: "", username: "" },
   });
+
   return (
     <AppContext.Provider value={{ state, setState }}>
       <Component {...pageProps} />
