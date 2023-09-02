@@ -17,11 +17,10 @@ const Header: React.FC = () => {
           <span className="">ResumAI</span>
         </div>
       </Link>
-      <div className="flex items-center space-x-6 text-sm font-small">
+      <div className="flex items-center space-x-6 text-l font-medium">
         <Link href={"/"}>Home</Link>
-        <Link href={"/features"}>Features</Link>
-        <Link href={"/"}>Team</Link>
-        <Link href={"/"}>Contact</Link>
+        <Link href={"/#services"}>Services</Link>
+        <Link href={"/#team"}>Team</Link>
       </div>
       <div></div>
 
