@@ -46,7 +46,7 @@ const WorkExperince = () => {
         onClick={() => setDisplay((prev) => !prev)}
       >
         <div>
-          <p className="font-bold text-2xl capitalize">Work Experince</p>
+          <p className="font-bold text-2xl capitalize">Work Experience</p>
           {/* <p className='text-text-secondary capitalize mt-4 font-semibold'>no Experince Added</p> */}
         </div>
         <div className="bg-[#E9F9FF] shadow-sm p-2 rounded-md">
