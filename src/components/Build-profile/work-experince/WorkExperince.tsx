@@ -22,7 +22,7 @@ const WorkExperince = () => {
       setWorkExperince(data);
     };
     fetchWorkExperince();
-  }, [workExperince]);
+  }, []);
 
   // close on click outside
   useEffect(() => {
