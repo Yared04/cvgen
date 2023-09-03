@@ -1,19 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "@/pages/_app";
 import { BsSend } from "react-icons/bs";
 import axios from "axios";
 import Loading from "../Common/Loading";
+import supabase from "@/utils/supabaseClient";
 
 const Chat = () => {
   const { state, setState } = useContext(AppContext);
   const [message, setmessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const getCurUser = async () => {
+      
+      var userId = (await supabase.auth.getUser()).data.user.id;
+      setUserId(userId);
+    };
+
+    getCurUser();
+  }, []);
   const submitHandler = async () => {
     setState({ ...state, chat: [...state.chat, message] });
     setmessage("");
     try {
       const postData = {
-        user_id: "c202d7f6-9406-44ba-b51b-ebfdb8dc93d7",
+        user_id: userId,
         position: "",
         description: "",
         message: message,
