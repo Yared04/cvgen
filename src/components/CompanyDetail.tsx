@@ -1,20 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { AppContext } from "@/pages/_app";
 import { useRouter } from 'next/router';
 import Loading from "./Common/Loading";
+import supabase from "@/utils/supabaseClient";
 export const CompanyDetails = ({ }) => {
     const [companyName, setCompanyName] = useState('')
   const [position, setPosition] = useState('')
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
   const {state,setState} = useContext(AppContext)
+    const [userId, setUserId] = useState('');
+
   const router = useRouter();
+  useEffect(() => {
+    const getCurUser = async () => {
+      
+      var userId = (await supabase.auth.getUser()).data.user.id;
+      setUserId(userId);
+    };
+
+    getCurUser();
+  }, []);
   const submitHandler = async (event) => {
+  
+  
     event.preventDefault()
     try {
       const postData = {
-        user_id: 'c202d7f6-9406-44ba-b51b-ebfdb8dc93d7',
+        user_id: userId,
         position: position,
         description: description,
         message:'',
