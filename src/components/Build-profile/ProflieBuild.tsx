@@ -1,5 +1,4 @@
 import { BuildProfile } from "@/components/Build-profile/BuildProfile";
-import Education from "@/components/Build-profile/Education/Education";
 import { UserCard } from "@/components/UserCard";
 import supabase from "@/utils/supabaseClient";
 import React, { useEffect, useState } from "react";
@@ -12,7 +11,7 @@ interface UserProps {
   address: string;
 }
 
-const profilebuild = () => {
+const Profilebuild = () => {
   const [user, setUser] = useState({} as UserProps);
 
   useEffect(() => {
@@ -46,4 +45,4 @@ const profilebuild = () => {
   );
 };
 
-export default profilebuild;
+export default Profilebuild;

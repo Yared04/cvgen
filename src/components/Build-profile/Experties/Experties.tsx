@@ -7,7 +7,12 @@ import Chip from "@/components/Chip";
 const Experties = () => {
   const [display, setDisplay] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [expertise, setExpertise] = useState({});
+  const [expertise, setExpertise] = useState({
+    skills: [],
+    creaated_at: "",
+    skill_id: "",
+    user_id: "",
+  });
 
   const trigger = useRef(null);
   const modal = useRef(null);
