@@ -69,7 +69,7 @@ const SignInComponent = ({}) => {
 const ProfileComponent = () => {
 
   return (
-    <Link href={'/profilebuild'}>
+    <Link href={'/profile'}>
     <div className="flex items-center justify-center">
       <div className="text-white cursor-pointer">
         <FontAwesomeIcon icon={faUser} className="text-white w-6 h-6 text-3xl" />
