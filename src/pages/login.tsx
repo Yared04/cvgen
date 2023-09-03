@@ -15,9 +15,7 @@ const Login = () => {
 
   const router = useRouter();
 
-  const setCurUser = () => {
-
-  };
+  const setCurUser = () => {};
 
   const validateEmail = () => {
     if (!email) {
@@ -43,15 +41,17 @@ const Login = () => {
 
     if (email && password) {
       try {
-        const response = await supabase.auth.signInWithPassword({ email, password });
+        const response = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      console.log(response);
+        console.log(response);
 
         router.push("/");
       } catch (error) {
         setLoginError("Error Logging in");
       }
-    
     }
   };
 

@@ -5,7 +5,7 @@ interface UserProps {
   email: string;
   phone: string;
   address: string;
-  photo: string;
+  photo?: string;
 }
 
 export const UserCard = ({ name, email, phone, address, photo }: UserProps) => {

@@ -1,14 +1,14 @@
 import React from "react";
 
-const Chip = ({ Options }) => {
+const Chip = ({ skills }) => {
   return (
     <div className="flex flex-wrap mt-2">
-      {Options.map((option) => (
+      {skills.map((skill, idx) => (
         <div
-          key={option.value}
-          className="bg-gradient-to-b from-primary to-primary-light text-white capitalize rounded-full px-3 py-1 text-sm font-semibold m-1"
+          key={idx}
+          className="bg-gradient-to-b from-primary to-primary-light text-white rounded-full px-3 py-1 text-sm font-semibold m-1"
         >
-          {option.label}
+          {skill}
         </div>
       ))}
     </div>

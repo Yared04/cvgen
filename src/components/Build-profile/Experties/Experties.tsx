@@ -1,13 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SkillsModal from "@/components/Modals/SkillsModal";
+import supabase from "@/utils/supabaseClient";
+import Chip from "@/components/Chip";
 
 const Experties = () => {
   const [display, setDisplay] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [expertise, setExpertise] = useState({
+    skills: [],
+    creaated_at: "",
+    skill_id: "",
+    user_id: "",
+  });
 
   const trigger = useRef(null);
   const modal = useRef(null);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      const { data, error } = await supabase
+        .from("skill")
+        .select("*")
+        .eq("user_id", (await supabase.auth.getUser()).data.user.id);
+      if (error) return console.log(error);
+      setExpertise(data[0]);
+    };
+    fetchSkills();
+  }, []);
 
   // close on click outside
   useEffect(() => {
@@ -47,20 +67,7 @@ const Experties = () => {
         </div>
       </div>
       {display && (
-        <div className="mt-4 flex flex-wrap gap-4">
-          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
-            Node.js
-          </p>
-          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
-            Node.js
-          </p>
-          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
-            Node.js
-          </p>
-          <p className=" bg-primary px-4 py-2 rounded-[4rem] text-white">
-            Node.js
-          </p>
-        </div>
+        <div className="mt-5">{<Chip skills={expertise.skills} />}</div>
       )}
       {showModal && (
         <div
