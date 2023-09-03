@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import Select from "react-select";
+import supabase from "@/utils/supabaseClient";
 
 const WorkExpModal = ({ close, modal }) => {
   const [company, setCompany] = useState("");
@@ -80,8 +81,49 @@ const WorkExpModal = ({ close, modal }) => {
     { value: "3", label: "Part-time" },
   ];
 
+  const handleSubmit = (event) => {
+    const startMonthValue = startMonth ? parseInt(startMonth.value, 10) : null;
+    const startYearValue = startYear ? parseInt(startYear.value, 10) : null;
+
+    const startDate =
+      startYearValue && startMonthValue
+        ? new Date(startYearValue, startMonthValue - 1)
+        : null;
+
+    // Convert the startDate to the desired format for the backend
+    const formattedStartDate = startDate ? startDate.toISOString() : null;
+    const endMonthValue = endMonth ? parseInt(endMonth.value, 10) : null;
+    const endYearValue = endYear ? parseInt(endYear.value, 10) : null;
+
+    const endDate =
+      endYearValue && endMonthValue
+        ? new Date(endYearValue, endMonthValue - 1)
+        : null;
+
+    // Convert the endDate to the desired format for the backend
+    const formattedEndDate = endDate ? endDate.toISOString() : null;
+
+    const data = {
+      company: company,
+      position_title: title,
+      experience_type: experience,
+      description: description,
+      location: country + ", " + region,
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
+      currently_working: currentlyWorking,
+    };
+    console.log(data);
+    supabase
+      .from("work_experience")
+      .insert([data])
+      .then(() => {
+        close(false);
+      });
+  };
+
   return (
-    <div className="text-text-secondary border p-6 bg-white" ref={modal}>
+    <div className="text-text-secondary border p-6 bg-white">
       <span className="flex gap-2 mb-4">
         <Image src="/workExp.png" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">
@@ -191,6 +233,7 @@ const WorkExpModal = ({ close, modal }) => {
             <Select
               id="endMonth"
               value={endMonth}
+              isDisabled={currentlyWorking}
               required
               onChange={handleEndMonthChange}
               options={monthOptions}
@@ -205,6 +248,7 @@ const WorkExpModal = ({ close, modal }) => {
             <Select
               id="endYear"
               value={endYear}
+              isDisabled={currentlyWorking}
               required
               onChange={(
                 selectedOption: { value: string; label: string } | null
@@ -245,7 +289,10 @@ const WorkExpModal = ({ close, modal }) => {
           >
             Cancel
           </button>
-          <button className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">
+          <button
+            onClick={handleSubmit}
+            className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded"
+          >
             Save
           </button>
         </div>
