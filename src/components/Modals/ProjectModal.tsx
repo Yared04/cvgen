@@ -113,7 +113,6 @@ const WorkExpModal = ({ close, modal, dropdown }) => {
       start_date: formattedStartDate,
       end_date: formattedEndDate,
     };
-    console.log(data, endMonth);
 
     supabase
       .from("project")

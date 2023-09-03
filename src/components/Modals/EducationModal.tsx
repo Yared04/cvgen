@@ -110,7 +110,6 @@ const EducationModal = ({ close, modal }) => {
       start_date: formattedStartDate,
       end_date: formattedEndDate,
     };
-    console.log(data, endMonth);
 
     supabase
       .from("education")

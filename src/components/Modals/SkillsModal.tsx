@@ -51,7 +51,6 @@ export function ResumeSkillsSelect({ close, modal }) {
       user_id: curUser.data.user.id,
       skills: selectedOptions.map((option) => option.value),
     };
-    console.log(data);
     supabase
       .from("skill")
       .insert([data])
