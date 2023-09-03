@@ -51,6 +51,7 @@ export function ResumeSkillsSelect({ close, modal }) {
       user_id: curUser.data.user.id,
       skills: selectedOptions.map((option) => option.value),
     };
+    console.log(data);
     supabase
       .from("skill")
       .insert([data])
@@ -59,10 +60,7 @@ export function ResumeSkillsSelect({ close, modal }) {
       });
   };
   return (
-    <div
-      className="text-text-secondary border p-6 w-10/12 bg-white"
-      ref={modal}
-    >
+    <div className="text-text-secondary border p-6 w-10/12 bg-white">
       <span className="flex gap-2 mb-4">
         <Image src="/education.svg" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">Edit Skills</h1>

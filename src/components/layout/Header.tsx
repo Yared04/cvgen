@@ -1,6 +1,7 @@
 import supabase from "@/utils/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
+<<<<<<< HEAD
 import React, { useState , useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -10,16 +11,36 @@ import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
   const [hasSession,setHasSession] = useState(false)
+=======
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
+const Header: React.FC = () => {
+  console.log(supabase.auth.getSession());
+  const [hasSession, setHasSession] = useState(false);
+>>>>>>> 39a1aa0 (Post requests done)
   useEffect(() => {
     const getCurUser = async () => {
-
       var session = await supabase.auth.getSession();
+<<<<<<< HEAD
       setHasSession(session.data.session != null && session.data.session.access_token != '');
     };
 
     getCurUser();
   }, [])
   console.log(hasSession);
+=======
+      console.log(session);
+      setHasSession(
+        session.data.session != null && session.data.session.access_token != ""
+      );
+    };
+
+    getCurUser();
+  }, []);
+
+>>>>>>> 39a1aa0 (Post requests done)
   return (
     <div className="flex w-full py-4 px-2 md:px-16 text-white bg-primary items-center justify-between">
       <Link href="/">
@@ -40,17 +61,16 @@ const Header: React.FC = () => {
         <Link href={"/#team"}>Team</Link>
       </div>
       <div></div>
-      
-     {!hasSession ? <SignInComponent/> : <ProfileComponent/>}
 
+      {!hasSession ? <SignInComponent /> : <ProfileComponent />}
     </div>
   );
 };
 
 export default Header;
 
-
 const SignInComponent = ({}) => {
+<<<<<<< HEAD
   return (<div className="flex text-sm items-center space-x-2">
         <Link href={"/login"}>
           <div className="flex p-2">
@@ -90,6 +110,36 @@ const ProfileComponent = () => {
   
     </div>
     
+=======
+  return (
+    <div className="flex text-sm items-center space-x-2">
+      <Link href={"/login"}>
+        <div className="flex p-2">
+          <p>Sign In</p>
+        </div>
+      </Link>
+      <Link href={"/signup"}>
+        <div className="flex p-2 items-center bg-[#979797] bg-opacity-20 rounded-md">
+          <p>Sign Up</p>
+        </div>
+      </Link>
+    </div>
+>>>>>>> 39a1aa0 (Post requests done)
   );
 };
 
+const ProfileComponent = () => {
+  return (
+    <Link href={"/profile"}>
+      <div className="flex items-center justify-center">
+        <div className="text-white cursor-pointer">
+          <FontAwesomeIcon
+            icon={faUser}
+            className="text-white w-6 h-6 text-3xl"
+          />
+          <span className="text-white ml-2">Profile</span>
+        </div>
+      </div>
+    </Link>
+  );
+};
