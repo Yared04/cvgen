@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { use, useEffect, useRef, useState } from "react";
 import WorkCard from "./WorkCard";
 import WorkExpModal from "@/components/Modals/WorkExpModal";
-import supabase from "@/utils/supaBaseClient";
+import supabase from "@/utils/supabaseClient";
 
 const WorkExperince = () => {
   const [display, setDisplay] = useState(false);

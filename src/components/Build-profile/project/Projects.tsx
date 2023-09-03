@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "@/components/Modals/ProjectModal";
-import supabase from "@/utils/supaBaseClient";
+import supabase from "@/utils/supabaseClient";
 
 const Projects = () => {
   const [display, setDisplay] = useState(false);

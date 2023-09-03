@@ -1,7 +1,7 @@
 import { BuildProfile } from "@/components/Build-profile/BuildProfile";
 import Education from "@/components/Build-profile/Education/Education";
 import { UserCard } from "@/components/UserCard";
-import supabase from "@/utils/supaBaseClient";
+import supabase from "@/utils/supabaseClient";
 import React, { useEffect, useState } from "react";
 interface UserProps {
   profile_picture: string;

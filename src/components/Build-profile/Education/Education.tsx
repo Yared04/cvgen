@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import EducationCard from "./EducationCard";
 import EducationModal from "@/components/Modals/EducationModal";
-import supabase from "@/utils/supaBaseClient";
+import supabase from "@/utils/supabaseClient";
 
 const Education = () => {
   const [display, setDisplay] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SkillsModal from "@/components/Modals/SkillsModal";
-import supabase from "@/utils/supaBaseClient";
+import supabase from "@/utils/supabaseClient";
 import Chip from "@/components/Chip";
 
 const Experties = () => {
