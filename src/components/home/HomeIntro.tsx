@@ -15,7 +15,7 @@ const HomeIntro: React.FC = () => {
             your chances of success
           </p>
           <div>
-            <Link href={"/profilebuild"}>
+            <Link href={"/profile"}>
               <button className="bg-white rounded-md text-center text-primary py-4 px-6 text-md font-semibold">
                 Get Started Now
               </button>
