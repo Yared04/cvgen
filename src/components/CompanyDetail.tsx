@@ -24,7 +24,6 @@ export const CompanyDetails = ({ }) => {
       const response = await axios.post('https://resumeai-backend-1fe8.onrender.com/api/cover_letter', postData);
       setState({...state,chat:[...state.chat, response.data.message],coverLetter:response.data.cover_letter })
   
-      console.log('Post request successful:', response.data);
       router.push('/resume')
       setLoading(false)
     } catch (error) {

@@ -4,23 +4,22 @@ import Link from "next/link";
 import React, { useState , useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from "next/router";
 
 
 
 const Header: React.FC = () => {
-  console.log(supabase.auth.getSession())
   const [hasSession,setHasSession] = useState(false)
   useEffect(() => {
     const getCurUser = async () => {
 
       var session = await supabase.auth.getSession();
-      console.log(session)
-      setHasSession(session.data.session.access_token != null && session.data.session.access_token != '');
+      setHasSession(session.data.session != null && session.data.session.access_token != '');
     };
 
     getCurUser();
   }, [])
-
+  console.log(hasSession);
   return (
     <div className="flex w-full py-4 px-2 md:px-16 text-white bg-primary items-center justify-between">
       <Link href="/">
@@ -67,16 +66,29 @@ const SignInComponent = ({}) => {
 
 
 const ProfileComponent = () => {
-
+  const router = useRouter();
+  async function logOutHandler(){
+    var response = await supabase.auth.signOut();
+    console.log(response);
+    router.push("/login");
+  }
   return (
-    <Link href={'/profile'}>
     <div className="flex items-center justify-center">
+    <Link href={'/profile'}>
+    
       <div className="text-white cursor-pointer">
         <FontAwesomeIcon icon={faUser} className="text-white w-6 h-6 text-3xl" />
         <span className="text-white ml-2">Profile</span>
       </div>
-    </div>
+    
     </Link>
+    
+    
+      <div className="text-white cursor-pointer" onClick={logOutHandler}>
+        <span className="text-[#ff0000] ml-4">Logout</span>
+      </div>
+  
+    </div>
     
   );
 };
