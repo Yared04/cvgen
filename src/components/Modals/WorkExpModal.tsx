@@ -3,6 +3,7 @@ import Image from "next/image";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import Select from "react-select";
 import supabase from "@/utils/supabaseClient";
+import { start } from "repl";
 
 const WorkExpModal = ({ close, modal }) => {
   const [company, setCompany] = useState("");
@@ -53,11 +54,15 @@ const WorkExpModal = ({ close, modal }) => {
       label: month.name,
     })),
   ];
-  const handleStartMonthChange = (selectedOption) => {
-    setStartMonth(selectedOption.name);
+  const handleStartMonthChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    setStartMonth(selectedOption);
   };
-  const handleEndMonthChange = (selectedOption) => {
-    setEndMonth(selectedOption.name);
+  const handleEndMonthChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    setEndMonth(selectedOption);
   };
 
   const currentYear = new Date().getFullYear();
@@ -81,7 +86,8 @@ const WorkExpModal = ({ close, modal }) => {
     { value: "3", label: "Part-time" },
   ];
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const startMonthValue = startMonth ? parseInt(startMonth.value, 10) : null;
     const startYearValue = startYear ? parseInt(startYear.value, 10) : null;
 
@@ -92,6 +98,7 @@ const WorkExpModal = ({ close, modal }) => {
 
     // Convert the startDate to the desired format for the backend
     const formattedStartDate = startDate ? startDate.toISOString() : null;
+
     const endMonthValue = endMonth ? parseInt(endMonth.value, 10) : null;
     const endYearValue = endYear ? parseInt(endYear.value, 10) : null;
 
@@ -102,7 +109,7 @@ const WorkExpModal = ({ close, modal }) => {
 
     // Convert the endDate to the desired format for the backend
     const formattedEndDate = endDate ? endDate.toISOString() : null;
-
+    const curUser = await supabase.auth.getUser();
     const data = {
       company: company,
       position_title: title,
@@ -112,8 +119,9 @@ const WorkExpModal = ({ close, modal }) => {
       start_date: formattedStartDate,
       end_date: formattedEndDate,
       currently_working: currentlyWorking,
+      user_id: curUser.data.user.id,
     };
-    console.log(data);
+
     supabase
       .from("work_experience")
       .insert([data])

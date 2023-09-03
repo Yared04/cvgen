@@ -22,7 +22,7 @@ const Education = () => {
       setEducation(data);
     };
     fetchEducation();
-  }, []);
+  }, [education]);
 
   useEffect(() => {
     const clickHandler = ({ target }) => {
