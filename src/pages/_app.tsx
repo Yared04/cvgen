@@ -7,6 +7,8 @@ import { createContext, useEffect, useState } from "react";
 export const AppContext = createContext({
   state: {
     curUser: { id: "", username: "" },
+    chat:[],
+    coverLetter:""
   },
   setState: (state) => {},
 });
@@ -14,6 +16,8 @@ export const AppContext = createContext({
 export default function App({ Component, pageProps }: AppProps) {
   const [state, setState] = useState({
     curUser: { id: "", username: "" },
+    chat:[],
+    coverLetter:""
   });
 
   return (
