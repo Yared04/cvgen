@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 const EducationCard = ({ edu }) => {
-  console.log(edu);
   return (
     <div className="flex  items-center gap-4 mt-5 ">
       <div className="p-3 bg-primary rounded-full">

@@ -63,7 +63,7 @@ const Education = () => {
       {display && (
         <div className="mt-12">
           {education.map((edu) => (
-            <EducationCard key={edu.id} edu={edu} />
+            <EducationCard key={edu.education_id} edu={edu} />
           ))}
         </div>
       )}

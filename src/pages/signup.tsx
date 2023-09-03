@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/router";
-import supabase from "@/utils/supabaseClient";
+import supabase from "@/utils/supaBaseClient";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -15,8 +15,6 @@ const Signup = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [signupError, setSignupError] = useState("");
   const router = useRouter();
-
-
 
   const validateEmail = () => {
     if (!email) {
@@ -53,28 +51,22 @@ const Signup = () => {
     validatePassword();
     validateConfirmPassword();
 
-    if (
-      email &&
-      password &&
-      confirmPassword &&
-      password === confirmPassword
-    ) {
+    if (email && password && confirmPassword && password === confirmPassword) {
       try {
         try {
-      const response = await supabase.auth.signUp({ email, password });
+          const response = await supabase.auth.signUp({ email, password });
 
-      console.log(response);
+          console.log(response);
 
-        router.push("/login");
+          router.push("/login");
+        } catch (error) {
+          setSignupError("Error signing up");
+        }
       } catch (error) {
-        setSignupError("Error signing up");
+        console.log(error);
       }
     }
-    catch (error) {
-      console.log(error);
-    }
   };
-}
 
   return (
     <div className="bg-slate-50 h-screen flex justify-center">
@@ -83,8 +75,6 @@ const Signup = () => {
           Sign Up
         </p>
         <div className="flex flex-col gap-4 place-items-center">
-          
-
           <input
             className="bg-gray-100 h-12 rounded-md pl-3 focus:bg-white focus:outline-gray-200"
             placeholder="Email"
@@ -156,4 +146,4 @@ const Signup = () => {
   );
 };
 
-export default Signup
+export default Signup;

@@ -16,7 +16,8 @@ const WorkExperince = () => {
     const fetchWorkExperince = async () => {
       const { data, error } = await supabase
         .from("work_experience")
-        .select("*");
+        .select("*")
+        .eq("user_id", (await supabase.auth.getUser()).data.user.id);
       if (error) return console.log(error);
       setWorkExperince(data);
     };
@@ -64,7 +65,7 @@ const WorkExperince = () => {
       {display && (
         <div className="mt-12">
           {workExperince.map((work) => (
-            <WorkCard key={work.id} work={work} />
+            <WorkCard key={work.experience_id} work={work} />
           ))}
         </div>
       )}

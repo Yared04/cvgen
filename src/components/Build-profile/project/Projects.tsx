@@ -2,25 +2,37 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "@/components/Modals/ProjectModal";
+import supabase from "@/utils/supaBaseClient";
 
 const Projects = () => {
   const [display, setDisplay] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [projects, setProjects] = useState([]);
 
   const trigger = useRef(null);
   const modal = useRef(null);
   const dropdownRef = useRef(null);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from("project")
+        .select("*")
+        .eq("user_id", (await supabase.auth.getUser()).data.user.id);
+      if (error) return console.log(error);
+      setProjects(data);
+    };
+    fetchProjects();
+  }, []);
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!modal.current) return;
-      const isDropdown = dropdownRef.current.contains(target);
       if (
         !showModal ||
         modal.current.contains(target) ||
-        trigger.current.contains(target) ||
-        isDropdown
+        trigger.current.contains(target)
       )
         return;
       setShowModal(false);
@@ -53,8 +65,9 @@ const Projects = () => {
         </div>
         {display && (
           <div className="mt-12">
-            <ProjectCard />
-            <ProjectCard />
+            {projects.map((project) => (
+              <ProjectCard key={project.project_id} project={project} />
+            ))}
           </div>
         )}
         {showModal && (

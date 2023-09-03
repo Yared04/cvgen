@@ -3,7 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { AppContext } from "./_app";
-import supabase from "@/utils/supabaseClient";
+import supabase from "@/utils/supaBaseClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
