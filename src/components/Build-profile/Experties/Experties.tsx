@@ -24,10 +24,18 @@ const Experties = () => {
         .select("*")
         .eq("user_id", (await supabase.auth.getUser()).data.user.id);
       if (error) return console.log(error);
-      setExpertise(data[0]);
+
+      // Extract skills arrays from each entry
+      const extractedSkills = data.flatMap((entry) => entry.skills);
+
+      setExpertise((prevState) => ({
+        ...prevState,
+        skills: extractedSkills,
+      }));
+      console.log();
     };
     fetchSkills();
-  }, [expertise]);
+  }, []);
 
   // close on click outside
   useEffect(() => {

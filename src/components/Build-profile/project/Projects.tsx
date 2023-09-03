@@ -23,7 +23,7 @@ const Projects = () => {
       setProjects(data);
     };
     fetchProjects();
-  }, [projects]);
+  }, []);
 
   // close on click outside
   useEffect(() => {
