@@ -21,6 +21,7 @@ export const ChooseSection = ({}) => {
           height={10}
           src={"/images/home/full-circle.svg"}
           alt=""
+          priority
         />
       </div>
       <div className="absolute bottom-96 right-[5%] z-10">
