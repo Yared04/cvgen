@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import axios from "axios";
 import Image from "next/image";
+import supabase from "@/utils/supabaseClient";
 
 export function ResumeSkillsSelect({ close, modal }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -43,15 +44,22 @@ export function ResumeSkillsSelect({ close, modal }) {
     setSelectedOptions(selectedOptions);
   };
 
-  const handleSubmit = () => {
-    console.log(selectedOptions);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const curUser = await supabase.auth.getUser();
+    const data = {
+      user_id: curUser.data.user.id,
+      skills: selectedOptions.map((option) => option.value),
+    };
+    supabase
+      .from("skill")
+      .insert([data])
+      .then(() => {
+        close(false);
+      });
   };
-
   return (
-    <div
-      className="text-text-secondary border p-6 w-10/12 bg-white"
-      ref={modal}
-    >
+    <div className="text-text-secondary border p-6 w-10/12 bg-white">
       <span className="flex gap-2 mb-4">
         <Image src="/education.svg" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">Edit Skills</h1>

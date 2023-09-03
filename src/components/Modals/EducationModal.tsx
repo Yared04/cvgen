@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
+import supabase from "@/utils/supabaseClient";
 
 const EducationModal = ({ close, modal }) => {
   const [school, setSchool] = useState("");
@@ -45,11 +46,15 @@ const EducationModal = ({ close, modal }) => {
       label: month.name,
     })),
   ];
-  const handleStartMonthChange = (selectedOption) => {
-    setStartMonth(selectedOption.name);
+  const handleStartMonthChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    setStartMonth(selectedOption);
   };
-  const handleEndMonthChange = (selectedOption) => {
-    setEndMonth(selectedOption.name);
+  const handleEndMonthChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    setEndMonth(selectedOption);
   };
   const degreeOptions = [
     { value: "1", label: "Bachelor's" },
@@ -73,8 +78,49 @@ const EducationModal = ({ close, modal }) => {
     label: year.toString(),
   }));
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const startMonthValue = startMonth ? parseInt(startMonth.value, 10) : null;
+    const startYearValue = startYear ? parseInt(startYear.value, 10) : null;
+
+    const startDate =
+      startYearValue && startMonthValue
+        ? new Date(startYearValue, startMonthValue - 1)
+        : null;
+
+    // Convert the startDate to the desired format for the backend
+    const formattedStartDate = startDate ? startDate.toISOString() : null;
+
+    const endMonthValue = endMonth ? parseInt(endMonth.value, 10) : null;
+    const endYearValue = endYear ? parseInt(endYear.value, 10) : null;
+
+    const endDate =
+      endYearValue && endMonthValue
+        ? new Date(endYearValue, endMonthValue - 1)
+        : null;
+
+    // Convert the endDate to the desired format for the backend
+    const formattedEndDate = endDate ? endDate.toISOString() : null;
+    const curUser = await supabase.auth.getUser();
+    const data = {
+      user_id: curUser.data.user.id,
+      school_name: school,
+      major: major,
+      degree_type: degree?.label,
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
+    };
+
+    supabase
+      .from("education")
+      .insert([data])
+      .then(() => {
+        close(false);
+      });
+  };
+
   return (
-    <div className="text-text-secondary border p-6 bg-white w-7/12" ref={modal}>
+    <div className="text-text-secondary border p-6 bg-white w-7/12">
       <span className="flex gap-2 mb-4">
         <Image src="/education.svg" alt="add" width={40} height={40} />
         <h1 className="my-auto text-black font-bold text-xl">Add Education</h1>
@@ -204,7 +250,10 @@ const EducationModal = ({ close, modal }) => {
           >
             Cancel
           </button>
-          <button className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">
+          <button
+            onClick={handleSubmit}
+            className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded"
+          >
             Save
           </button>
         </div>

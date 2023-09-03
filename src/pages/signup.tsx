@@ -56,8 +56,6 @@ const Signup = () => {
         try {
           const response = await supabase.auth.signUp({ email, password });
 
-          console.log(response);
-
           router.push("/login");
         } catch (error) {
           setSignupError("Error signing up");

@@ -27,7 +27,7 @@ const Experties = () => {
       setExpertise(data[0]);
     };
     fetchSkills();
-  }, []);
+  }, [expertise]);
 
   // close on click outside
   useEffect(() => {

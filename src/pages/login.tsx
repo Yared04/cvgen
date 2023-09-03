@@ -46,8 +46,6 @@ const Login = () => {
           password,
         });
 
-        console.log(response);
-
         router.push("/");
       } catch (error) {
         setLoginError("Error Logging in");

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import Select from "react-select";
+import supabase from "@/utils/supabaseClient";
 
 const WorkExpModal = ({ close, modal, dropdown }) => {
   const [project, setProject] = useState("");
@@ -47,11 +48,15 @@ const WorkExpModal = ({ close, modal, dropdown }) => {
       label: month.name,
     })),
   ];
-  const handleStartMonthChange = (selectedOption) => {
-    setStartMonth(selectedOption.name);
+  const handleStartMonthChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    setStartMonth(selectedOption);
   };
-  const handleEndMonthChange = (selectedOption) => {
-    setEndMonth(selectedOption.name);
+  const handleEndMonthChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    setEndMonth(selectedOption);
   };
 
   const currentYear = new Date().getFullYear();
@@ -74,6 +79,48 @@ const WorkExpModal = ({ close, modal, dropdown }) => {
     { value: "2", label: "Full-time" },
     { value: "3", label: "Part-time" },
   ];
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const startMonthValue = startMonth ? parseInt(startMonth.value, 10) : null;
+    const startYearValue = startYear ? parseInt(startYear.value, 10) : null;
+
+    const startDate =
+      startYearValue && startMonthValue
+        ? new Date(startYearValue, startMonthValue - 1)
+        : null;
+
+    // Convert the startDate to the desired format for the backend
+    const formattedStartDate = startDate ? startDate.toISOString() : null;
+
+    const endMonthValue = endMonth ? parseInt(endMonth.value, 10) : null;
+    const endYearValue = endYear ? parseInt(endYear.value, 10) : null;
+
+    const endDate =
+      endYearValue && endMonthValue
+        ? new Date(endYearValue, endMonthValue - 1)
+        : null;
+
+    // Convert the endDate to the desired format for the backend
+    const formattedEndDate = endDate ? endDate.toISOString() : null;
+    const curUser = await supabase.auth.getUser();
+    const data = {
+      user_id: curUser.data.user.id,
+      project_name: project,
+      description: description,
+      project_role: title,
+
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
+    };
+
+    supabase
+      .from("project")
+      .insert([data])
+      .then(() => {
+        close(false);
+      });
+  };
 
   return (
     <div className="text-text-secondary border p-6 bg-white" ref={modal}>
@@ -205,7 +252,10 @@ const WorkExpModal = ({ close, modal, dropdown }) => {
           >
             Cancel
           </button>
-          <button className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">
+          <button
+            onClick={handleSubmit}
+            className="bg-primary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded"
+          >
             Save
           </button>
         </div>
